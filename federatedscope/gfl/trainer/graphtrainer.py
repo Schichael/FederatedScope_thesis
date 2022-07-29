@@ -6,6 +6,8 @@ import numpy as np
 from federatedscope.core.monitors import Monitor
 from federatedscope.register import register_trainer
 from federatedscope.core.trainers import GeneralTorchTrainer
+from federatedscope.core.trainers.context import CtxVar
+from federatedscope.core.auxiliaries.enums import LIFECYCLE
 
 logger = logging.getLogger(__name__)
 
@@ -28,8 +30,8 @@ class GraphMiniBatchTrainer(GeneralTorchTrainer):
         ctx.loss_batch = ctx.criterion(pred, label)
 
         ctx.batch_size = len(label)
-        ctx.y_true = label
-        ctx.y_prob = pred
+        ctx.y_true = CtxVar(label, LIFECYCLE.BATCH)
+        ctx.y_prob = CtxVar(pred, LIFECYCLE.BATCH)
 
         # record the index of the ${MODE} samples
         if hasattr(ctx.data_batch, 'data_index'):
