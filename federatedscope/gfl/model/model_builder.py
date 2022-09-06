@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import division
 
+from federatedscope.contrib.model.graph_level_transformer import GNN_Net_Graph_Transformer
 from federatedscope.gfl.model.gcn import GCN_Net
 from federatedscope.gfl.model.sage import SAGE_Net
 from federatedscope.gfl.model.gat import GAT_Net
@@ -77,6 +78,16 @@ def get_gnn(model_config, local_data):
                             out_channels=model_config.out_channels,
                             num_nn=data.num_edge_features,
                             hidden=model_config.hidden)
+        elif model_config.type == 'transformer':
+            model = GNN_Net_Graph_Transformer(data.x.shape[-1],
+                                  max(model_config.out_channels, num_label),
+                                  hidden=model_config.hidden,
+                                  max_depth=model_config.layer,
+                                  dropout=model_config.dropout,
+                                  gnn=model_config.type,
+                                  pooling=model_config.graph_pooling,
+                                  edge_dim=data.num_edge_features,
+                                              learning_type=model_config.type)
         else:
             model = GNN_Net_Graph(data.x.shape[-1],
                                   max(model_config.out_channels, num_label),

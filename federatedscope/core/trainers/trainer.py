@@ -279,7 +279,6 @@ class Trainer(object):
                         hook(self.ctx)
                 for hook in hooks_set["on_batch_end"]:
                     hook(self.ctx)
-
                 # Break in the final epoch
                 if self.ctx.cur_mode == 'train' and epoch_i == \
                         self.ctx.num_train_epoch - 1:

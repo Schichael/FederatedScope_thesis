@@ -174,12 +174,13 @@ class NodeMiniBatchTrainer(GeneralTorchTrainer):
 
 
 def call_node_level_trainer(trainer_type):
+    trainer_builder = None
     if trainer_type == 'nodefullbatch_trainer':
         trainer_builder = NodeFullBatchTrainer
     elif trainer_type == 'nodeminibatch_trainer':
         trainer_builder = NodeMiniBatchTrainer
-    else:
-        raise ValueError
+    #else:
+    #    raise ValueError
 
     return trainer_builder
 

@@ -18,7 +18,7 @@ data:
   shuffle: True
   num_workers: 0
 personalization:
-  local_param: ['encoder_atom', 'encoder', 'clf']
+  local_param: ['node_encoder', 'clf']
 train:
   batch_or_epoch: epoch
   local_update_steps: 1
@@ -28,7 +28,7 @@ train:
 trainer:
   type: graphminibatch_trainer
 model:
-  type: gin
+  type: transformer
   task: graph
   hidden: 64
   dropout: 0.5

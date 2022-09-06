@@ -199,12 +199,13 @@ class LinkMiniBatchTrainer(GeneralTorchTrainer):
 
 
 def call_link_level_trainer(trainer_type):
+    trainer_builder = None
     if trainer_type == 'linkfullbatch_trainer':
         trainer_builder = LinkFullBatchTrainer
     elif trainer_type == 'linkminibatch_trainer':
         trainer_builder = LinkMiniBatchTrainer
-    else:
-        raise ValueError
+    #else:
+    #    raise ValueError
 
     return trainer_builder
 

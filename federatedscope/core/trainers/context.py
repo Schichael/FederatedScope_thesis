@@ -205,12 +205,14 @@ class Context(dict):
         if self.get(f"{target_data_split_name}_data") is None and self.get(
                 f"{target_data_split_name}_loader") is None:
             if skip:
+                """
                 logger.warning(
                     f"No {target_data_split_name}_data or"
                     f" {target_data_split_name}_loader in the trainer, "
                     f"will skip evaluation"
                     f"If this is not the case you want, please check "
                     f"whether there is typo for the name")
+                """
                 return False
             else:
                 raise ValueError(

@@ -6,6 +6,7 @@ from torch_geometric.data.batch import Batch
 from torch_geometric.nn.glob import global_add_pool, global_mean_pool, \
     global_max_pool
 
+from federatedscope.contrib.model.transformer_gnn import TransformerGNN
 from federatedscope.gfl.model.gcn import GCN_Net
 from federatedscope.gfl.model.sage import SAGE_Net
 from federatedscope.gfl.model.gat import GAT_Net

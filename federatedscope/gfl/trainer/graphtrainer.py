@@ -41,11 +41,13 @@ class GraphMiniBatchTrainer(GeneralTorchTrainer):
 
     def _hook_on_batch_forward_flop_count(self, ctx):
         if not isinstance(self.ctx.monitor, Monitor):
+            """
             logger.warning(
                 f"The trainer {type(self)} does contain a valid monitor, "
                 f"this may be caused by initializing trainer subclasses "
                 f"without passing a valid monitor instance."
                 f"Plz check whether this is you want.")
+            """
             return
 
         if self.cfg.eval.count_flops and self.ctx.monitor.flops_per_sample \

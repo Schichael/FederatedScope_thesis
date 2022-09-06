@@ -19,6 +19,7 @@ def get_model(model_config, local_data, backend='torch'):
     Returns:
         model (torch.Module): the instantiated model.
     """
+    x = register.model_dict
     for func in register.model_dict.values():
         model = func(model_config, local_data)
         if model is not None:
@@ -97,9 +98,9 @@ def get_model(model_config, local_data, backend='torch'):
         from federatedscope.nlp.model import get_transformer
         model = get_transformer(model_config, local_data)
     elif model_config.type.lower() in [
-            'gcn', 'sage', 'gpr', 'gat', 'gin', 'mpnn'
+            'gcn', 'sage', 'gpr', 'gat', 'gin', 'mpnn', 'transformer'
     ]:
-        from federatedscope.gfl.model import get_gnn
+        from federatedscope.gfl.model.model_builder import get_gnn
         model = get_gnn(model_config, local_data)
     elif model_config.type.lower() in ['vmfnet', 'hmfnet']:
         from federatedscope.mf.model.model_builder import get_mfnet

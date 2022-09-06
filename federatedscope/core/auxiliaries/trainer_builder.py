@@ -95,6 +95,7 @@ def get_trainer(model=None,
         # try to find user registered trainer
         trainer = None
         for func in register.trainer_dict.values():
+            print(register.trainer_dict)
             trainer_cls = func(config.trainer.type)
             if trainer_cls is not None:
                 trainer = trainer_cls(model=model,

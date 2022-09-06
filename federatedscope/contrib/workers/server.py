@@ -44,6 +44,8 @@ class Server(Worker):
                  device='cpu',
                  strategy=None,
                  unseen_clients_id=None,
+                 trainer = None,
+                 aggregator = None,
                  **kwargs):
 
         super(Server, self).__init__(ID, state, config, model, strategy)
@@ -61,11 +63,7 @@ class Server(Worker):
             # put the model to the specified device
             model.to(device)
         # Build aggregator
-        self.aggregator = get_aggregator(self._cfg.federate.method,
-                                         model=model,
-                                         device=device,
-                                         online=self._cfg.federate.online_aggr,
-                                         config=self._cfg)
+        self.aggregator = aggregator
         if self._cfg.federate.restore_from != '':
             _ = self.aggregator.load_model(self._cfg.federate.restore_from)
             logger.info("Restored the model from {}-th round's ckpt")
@@ -96,14 +94,7 @@ class Server(Worker):
             # set up a trainer for conducting evaluation in server
             assert self.model is not None
             assert self.data is not None
-            self.trainer = get_trainer(
-                model=self.model,
-                data=self.data,
-                device=self.device,
-                config=self._cfg,
-                only_for_eval=True,
-                monitor=self._monitor
-            )  # the trainer is only used for global evaluation
+            self.trainer = trainer
             self.trainers = [self.trainer]
             if self.model_num > 1:
                 # By default, the evaluation is conducted by calling
