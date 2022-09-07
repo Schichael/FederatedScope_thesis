@@ -99,14 +99,12 @@ class LaplacianTrainerNoGraph(GeneralTorchTrainer):
         loss_set = []
         for name, param in self.ctx.model.named_parameters():
             theta = self.ctx.model.state_dict()[name]
-
             # omega_dropout = torch.rand(omega[name].size()).cuda() if cuda else torch.rand(omega[name].size())
             # omega_dropout[omega_dropout>0.5] = 1.0
             # omega_dropout[omega_dropout <= 0.5] = 0.0
 
             loss_set.append((0.5 / round_num) * (omega[name] * ((theta - mu[name]) ** 2)).sum())
-        return random.randint(0,10)
-        #return sum(loss_set)
+        return sum(loss_set)
 
     def _hook_on_batch_backward(self, ctx):
         ctx.optimizer.zero_grad()
