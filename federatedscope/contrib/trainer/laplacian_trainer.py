@@ -80,7 +80,7 @@ class LaplacianTrainer(GraphMiniBatchTrainer):
             label = label.unsqueeze(0)
         ctx.loss_batch_ce = ctx.criterion(pred, label)
         ctx.loss_batch = ctx.loss_batch_ce
-        ctx.loss_batch_csd = self.get_csd_loss(ctx.new_mu, ctx.new_omega, ctx.cur_epoch_i + 1)
+        ctx.loss_batch_csd = self.get_csd_loss(ctx.model.state_dict(), ctx.new_mu, ctx.new_omega, ctx.cur_epoch_i + 1)
 
         ctx.batch_size = len(label)
         ctx.y_true = label
@@ -94,16 +94,18 @@ class LaplacianTrainer(GraphMiniBatchTrainer):
                 ctx.get(f'{ctx.cur_data_split}_y_inds') + [batch[_].data_index.item() for _ in range(len(label))]
             )
 
-    def get_csd_loss(self, mu, omega, round_num):
+    def get_csd_loss(self, model_params, mu, omega, round_num):
         loss_set = []
-        for name, param in self.ctx.model.named_parameters():
-            theta = self.ctx.model.state_dict()[name]
+        trainable_parameters = self._param_filter(model_params)
+        for name in trainable_parameters:
+            if name in omega:
+                theta = self.ctx.model.state_dict()[name]
 
-            # omega_dropout = torch.rand(omega[name].size()).cuda() if cuda else torch.rand(omega[name].size())
-            # omega_dropout[omega_dropout>0.5] = 1.0
-            # omega_dropout[omega_dropout <= 0.5] = 0.0
+                # omega_dropout = torch.rand(omega[name].size()).cuda() if cuda else torch.rand(omega[name].size())
+                # omega_dropout[omega_dropout>0.5] = 1.0
+                # omega_dropout[omega_dropout <= 0.5] = 0.0
 
-            loss_set.append((0.5 / round_num) * (omega[name] * ((theta - mu[name]) ** 2)).sum())
+                loss_set.append((0.5 / round_num) * (omega[name] * ((theta - mu[name]) ** 2)).sum())
 
         return sum(loss_set)
 
@@ -114,9 +116,9 @@ class LaplacianTrainer(GraphMiniBatchTrainer):
             if param.grad is not None:
                 ctx.omega[name] += (len(ctx.data_batch.y) / len(
                     ctx.data['train'].dataset)) * param.grad.data.clone() ** 2
+
         ctx.optimizer.zero_grad()
         loss = ctx.loss_batch_ce + self.config.params.csd_importance * ctx.loss_batch_csd
-
         loss.backward(retain_graph=True)
 
         if ctx.grad_clip > 0:
