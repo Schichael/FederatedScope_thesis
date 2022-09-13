@@ -78,7 +78,7 @@ class GNN_Net_Graph_Transformer(torch.nn.Module):
                  out_channels,
                  hidden=64,
                  max_depth=2,
-                 dropout=.0,
+                 dropout=0.5,
                  gnn='gcn',
                  pooling='add',
                  edge_dim=None,
@@ -143,8 +143,6 @@ class GNN_Net_Graph_Transformer(torch.nn.Module):
         x = self.linear(x)
         x = F.dropout(x, self.dropout, training=self.training)
         x = self.clf(x)
-        if self.learning_type == 'graphClassification':
-            x = F.softmax(x)
         return x
 
     """

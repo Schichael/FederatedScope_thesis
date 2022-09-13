@@ -360,6 +360,8 @@ class Monitor(object):
                     else:
                         all_res = np.array(copy.copy(results[key]))
                         if form == 'weighted_avg':
+                            if len(new_results) != len(dataset_num):
+                                new_results[key] = np.nan
                             new_results[key] = np.sum(
                                 np.array(new_results[key]) *
                                 dataset_num) / np.sum(dataset_num)
