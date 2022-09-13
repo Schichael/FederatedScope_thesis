@@ -5,11 +5,11 @@ client_1:
   criterion:
     type: CrossEntropyLoss
   train:
-    local_update_steps: 10
+    local_update_steps: 1
     optimizer:
       lr: 0.1
-
   eval:
+    metrics: ['acc', 'imp_ratio']
     base: 0.263789
   params:
     alpha: 0.003835
@@ -20,10 +20,11 @@ client_2:
   criterion:
     type: CrossEntropyLoss
   train:
-    local_update_steps: 10
+    local_update_steps: 1
     optimizer:
-      lr: 0.1
+      lr: 0.01
   eval:
+    metrics: ['acc', 'imp_ratio']
     base: 0.289617
   params:
     alpha: 0.00056
@@ -34,10 +35,11 @@ client_3:
   criterion:
     type: CrossEntropyLoss
   train:
-    local_update_steps: 10
+    local_update_steps: 1
     optimizer:
-      lr: 0.1
+      lr: 0.001
   eval:
+    metrics: ['acc', 'imp_ratio']
     base: 0.355404
   params:
     alpha: 0.0068
@@ -48,10 +50,11 @@ client_4:
   criterion:
     type: CrossEntropyLoss
   train:
-    local_update_steps: 10
+    local_update_steps: 1
     optimizer:
-      lr: 0.03
+      lr: 0.01
   eval:
+    metrics: ['acc', 'imp_ratio']
     base: 0.176471
   params:
     alpha: 0.0031
@@ -62,10 +65,11 @@ client_5:
   criterion:
     type: CrossEntropyLoss
   train:
-    local_update_steps: 10
+    local_update_steps: 1
     optimizer:
-      lr: 0.1
+      lr: 0.0001
   eval:
+    metrics: ['acc', 'imp_ratio']
     base: 0.396825
   params:
     alpha: 0.0057
@@ -76,10 +80,11 @@ client_6:
   criterion:
     type: CrossEntropyLoss
   train:
-    local_update_steps: 10
+    local_update_steps: 1
     optimizer:
-      lr: 0.005
+      lr: 0.0005
   eval:
+    metrics: ['acc', 'imp_ratio']
     base: 0.261580
   params:
     alpha: 0.0034
@@ -90,10 +95,11 @@ client_7:
   criterion:
     type: CrossEntropyLoss
   train:
-    local_update_steps: 10
+    local_update_steps: 1
     optimizer:
       lr: 0.01
   eval:
+    metrics: ['acc', 'imp_ratio']
     base: 0.302378
   params:
     alpha: 0.0068
@@ -104,10 +110,11 @@ client_8:
   criterion:
     type: CrossEntropyLoss
   train:
-    local_update_steps: 10
+    local_update_steps: 1
     optimizer:
       lr: 0.05
   eval:
+    metrics: ['acc', 'imp_ratio']
     base: 0.211538
   params:
     alpha: 0.0024
@@ -118,10 +125,11 @@ client_9:
   criterion:
     type: MSELoss
   train:
-    local_update_steps: 10
+    local_update_steps: 1
     optimizer:
       lr: 0.1
   eval:
+    metrics: ['mse', 'imp_ratio']
     base: 0.059199
   params:
     alpha: 0.41
@@ -132,10 +140,11 @@ client_10:
   criterion:
     type: MSELoss
   train:
-    local_update_steps: 10
+    local_update_steps: 1
     optimizer:
-      lr: 0.1
+      lr: 0.05
   eval:
+    metrics: ['mse', 'imp_ratio']
     base: 0.007083
   params:
     alpha: 0.34
@@ -146,10 +155,11 @@ client_11:
   criterion:
     type: MSELoss
   train:
-    local_update_steps: 10
+    local_update_steps: 1
     optimizer:
       lr: 0.05
   eval:
+    metrics: ['mse', 'imp_ratio']
     base: 0.734011
   params:
     alpha: 0.00696
@@ -160,10 +170,11 @@ client_12:
   criterion:
     type: MSELoss
   train:
-    local_update_steps: 10
+    local_update_steps: 1
     optimizer:
-      lr: 0.1
+      lr: 0.01
   eval:
+    metrics: ['mse', 'imp_ratio']
     base: 1.361326
   params:
     alpha: 0.00186
@@ -174,10 +185,11 @@ client_13:
   criterion:
     type: MSELoss
   train:
-    local_update_steps: 10
+    local_update_steps: 1
     optimizer:
       lr: 0.05
   eval:
+    metrics: ['mse', 'imp_ratio']
     base: 0.004389
   params:
     alpha: 0.217
